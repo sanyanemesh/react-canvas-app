@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { fetchData } from './helpers';
 import SelectButtons from './components/ButtonSelect';
 import './App.css';
-import CanvasChart from './components/CanvasChart';
+import ForexChart from './components/Chart';
 
 interface MyComponentProps {}
 
@@ -84,7 +84,12 @@ class App extends Component<MyComponentProps, MyComponentState> {
         {prepared && (
           <div>
             <h2>Chart with selected data</h2>
-            <CanvasChart data={prepared.Bars} width={800} height={400}/> </div>
+            
+            {/* <CanvasChart data={prepared.Bars} width={800} height={400}/>  */}
+            
+
+            <ForexChart data={prepared.Bars} />
+            </div>
         )}
       </div>
     );

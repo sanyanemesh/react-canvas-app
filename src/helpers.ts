@@ -12,7 +12,7 @@ export async function fetchData<T>(url: string): Promise<FetchDataResponse<T>> {
   let call = url
   if (url === 'EURUSD') call = EURUSD 
   if (url === 'USDJPY') call = USDJPY
-  
+
   try {
     const response = await fetch(call);
     if (!response.ok) {
