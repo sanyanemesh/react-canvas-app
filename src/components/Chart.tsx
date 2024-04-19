@@ -150,7 +150,7 @@ class Chart extends Component<ChartProps, ChartState> {
             const labelElement = document.createElement('div');
             labelElement.textContent = label.toFixed(5);
             labelElement.style.position = 'absolute';
-            labelElement.style.right = '0';
+            labelElement.style.right = '-60px';
             labelElement.style.top = y + 'px';
             labelElement.style.background = 'white'; // Set background color to white
             labelsContainer.appendChild(labelElement);
@@ -167,10 +167,7 @@ class Chart extends Component<ChartProps, ChartState> {
             ctx.lineTo(totalWidth, y);
             ctx.stroke();
         }
-    
-        // Calculate the bottom position for time labels
-        const bottomPosition = height + 20; // Adjust as needed
-    
+        
         // Calculate label frequency based on visible range and desired label count
         const visibleLabelCount = 7;
         const labelFrequency = Math.max(1, Math.ceil(visibleData.length / visibleLabelCount));
@@ -187,7 +184,7 @@ class Chart extends Component<ChartProps, ChartState> {
             labelElement.textContent = item.Time;
             labelElement.style.position = 'absolute';
             labelElement.style.left = x + 'px';
-            labelElement.style.bottom = '0';
+            labelElement.style.bottom = '-20px';
             labelElement.style.background = 'white'; // Set background color to white
             xAxisContainer.appendChild(labelElement); // Append label to x-axis container
         }
@@ -243,7 +240,7 @@ class Chart extends Component<ChartProps, ChartState> {
     render() {
         return (
             <div style={{ position: "relative", width: '800px' }}>
-                <div ref={this.containerRef} style={{ overflowX: 'scroll', width: '800px', height: '400px' }} onWheel={this.handleWheel}>
+                <div ref={this.containerRef} style={{ overflowX: 'scroll', width: '800px', height: '425px' }} onWheel={this.handleWheel}>
                     <canvas ref={this.canvasRef} width={800} height={400}></canvas>
                     <div ref={this.labelsContainerRef} style={{ position: 'absolute', right: '0', top: '0', bottom: '0', display: 'flex', flexDirection: 'column' }}></div>
                     <div ref={this.xAxisContainerRef} style={{ position: 'absolute', left: '0', right: '0', bottom: '0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}></div>
