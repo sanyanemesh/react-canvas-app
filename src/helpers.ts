@@ -7,6 +7,14 @@ interface FetchDataResponse<T> {
   loading: boolean;
   error: string | null;
 }
+export interface Item {
+  Time: number;
+  Open: number;
+  High: number;
+  Low: number;
+  Close: number;
+  TickVolume: number;
+}
 
 export async function fetchData<T>(url: string): Promise<FetchDataResponse<T>> {
   let call = url
@@ -35,4 +43,24 @@ export function convertTimestampToDateString(timestamp: number| null): string {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+export function formatTime(seconds: number): string {
+  const hours: number = Math.floor(seconds / 3600);
+  const minutes: number = Math.floor((seconds % 3600) / 60);
+  
+  const formattedHours: string = String(hours).padStart(2, '0');
+  const formattedMinutes: string = String(minutes).padStart(2, '0');
+  
+  return `${formattedHours}:${formattedMinutes}`;
+}
+
+// no need to use, because data always exist, its not a gap issue
+export function hasMissingValues(obj: Item): boolean {
+  for (const key in obj) {
+    if (obj[key as keyof Item] === null || obj[key as keyof Item] === undefined) {
+      return true; // If any value is missing, return true
+    }
+  }
+  return false; // If no missing values found, return false
 }

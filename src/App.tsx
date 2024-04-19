@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { fetchData } from './helpers';
+import { fetchData, formatTime, hasMissingValues, Item } from './helpers';
 import SelectButtons from './components/ButtonSelect';
 import './App.css';
-import ForexChart from './components/Chart';
+import Chart from './components/Chart';
 
 interface MyComponentProps {}
 
@@ -64,11 +64,20 @@ class App extends Component<MyComponentProps, MyComponentState> {
     if(index === 0) prepared = data && data[0]
     return prepared
   }
+  timeConverted = () => {
+    let data = this.prepareData();
+    let result = data && data.Bars.map((item:Item) => {
+      const formattedTime: string = formatTime(item.Time);
+      return { ...item, Time: formattedTime };
+    })
+    return result
+  }
 
   render() {
     const { chunkStartValues, loading, error, selectedDate, selectedPair } = this.state;
     if(error) return <>Something went wrong ...</>
-    let prepared = this.prepareData()
+    let prepared = this.timeConverted()
+    console.log("prepared len", prepared && prepared?.length)
 
     return (
       <div className='container'>
@@ -84,11 +93,7 @@ class App extends Component<MyComponentProps, MyComponentState> {
         {prepared && (
           <div>
             <h2>Chart with selected data</h2>
-            
-            {/* <CanvasChart data={prepared.Bars} width={800} height={400}/>  */}
-            
-
-            <ForexChart data={prepared.Bars} />
+              <Chart data={prepared} />
             </div>
         )}
       </div>
